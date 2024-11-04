@@ -1,0 +1,76 @@
+[
+  {
+    "ContainingType": "CustomerEmailProgram.Controllers.CustomerEmailsController",
+    "Method": "CreateNewCustomer",
+    "RelativePath": "api/CustomerEmails/CreateNewCustomer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newCustomer",
+        "Type": "CustomerEmailProgram.Models.NewCustomerRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CustomerEmailProgram.Controllers.CustomerEmailsController",
+    "Method": "DeleteCustomer",
+    "RelativePath": "api/CustomerEmails/DeleteCustomer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CustomerEmailProgram.Controllers.CustomerEmailsController",
+    "Method": "GetCustomerEmails",
+    "RelativePath": "api/CustomerEmails/GetCustomerEmails",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CustomerEmailProgram.Controllers.CustomerEmailsController",
+    "Method": "MassUpdateEmail",
+    "RelativePath": "api/CustomerEmails/MassUpdateEmail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "massEmail",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CustomerEmailProgram.Controllers.CustomerEmailsController",
+    "Method": "UpdateEmailForCustomer",
+    "RelativePath": "api/CustomerEmails/UpdateEmailForCustomer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "CustomerEmailProgram.Models.NewEmailRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
