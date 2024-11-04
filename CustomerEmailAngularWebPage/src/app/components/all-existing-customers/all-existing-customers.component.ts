@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { CustomerEmailService } from '../../services/customer-email.service';
 import { HttpHeaders } from '@angular/common/http';
 import { Customer } from '../../models/customer';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'all-existing-customers',
@@ -12,9 +13,10 @@ import { Customer } from '../../models/customer';
 export class CustomersComponent implements OnInit {
 
 
-    constructor(private apiService: CustomerEmailService) { }
+    constructor(private apiService: CustomerEmailService, private session: SessionStorageService) { }
 
   ngOnInit() {
+    this.session.store('lastCustomerSelected', 'First Customer');
     console.log("you have hit the all-existing-customers ts file");
   } 
 
@@ -25,5 +27,6 @@ export class CustomersComponent implements OnInit {
         console.log(output);
 
     });
+    const lastCustomerTouched = this.session.retrieve('lastCustomerSelected');
   }
 }

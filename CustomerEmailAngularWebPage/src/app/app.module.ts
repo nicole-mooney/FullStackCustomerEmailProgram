@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { NavModule } from './nav.module';
 import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { appConfig } from './app.config';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common
     NavModule,
     RouterModule,
   ],
-  providers: [provideHttpClient()],
+  providers: [appConfig.providers],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
