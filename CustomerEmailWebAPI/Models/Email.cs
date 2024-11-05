@@ -5,6 +5,7 @@ namespace CustomerEmailProgram.Models
         public Guid Id { get; set; }
         public Guid CustomerId { get; set; }
         public string Message { get; set; }
+        public bool IsDraft { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime LastUpdatedDate { get; set; }
     }

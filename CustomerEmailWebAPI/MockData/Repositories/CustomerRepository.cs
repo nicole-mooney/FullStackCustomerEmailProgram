@@ -44,15 +44,35 @@ namespace CustomerEmailProgram.MockRepository.Repositories
             };
         }
 
+        public void Remove(Guid customerId)
+        {
+            try
+            {
+                var customerIndexInDB = _customers.FindIndex(c => c.Id == customerId);
+                if (customerIndexInDB != null && customerIndexInDB >= 0)
+                {
+                    _customers.RemoveAt(customerIndexInDB);
+                }
+                else
+                {
+                    throw new Exception("Failed to remove customer. It does not exist in the repository.");
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Remove for CustomerRepository threw an exception.");
+            };
+        }
+
         public void Update(Customer customer)
         {
             
             try
             {
-                var customerInDB = _customers.Where(c => c.Id == customer.Id).FirstOrDefault();
-                if (customerInDB != null)
+                var customerIndexInDB = _customers.FindIndex(c => c.Id == customer.Id);
+                if (customerIndexInDB != null && customerIndexInDB >= 0)
                 {
-                    customerInDB = customer;
+                    _customers[customerIndexInDB] = customer;
                 }
                 else
                 {

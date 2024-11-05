@@ -30,29 +30,47 @@ namespace CustomerEmailProgram.Controllers
 
         #region POST WebAPI Calls
 
+        [HttpPost("BulkSendEmail")]
+        public async Task<IActionResult> BulkSendEmail(string emailMessage)
+        {
+            var response = await _blCustomerEmails.BulkSendEmail(emailMessage);
+            return Ok(response);
+        }
+
         [HttpPost("CreateNewCustomer")]
         public async Task<IActionResult> CreateNewCustomer(NewCustomerRequest newCustomer)
         {
-            return null;
+            var customer = await _blCustomerEmails.CreateNewCustomer(newCustomer);
+            return Ok(customer);
         }
 
         [HttpPost("DeleteCustomer")]
-        public async Task<IActionResult> DeleteCustomer(int customerId)
+        public async Task<IActionResult> DeleteCustomer(string customerId)
         {
-            return null;
+            var response = await _blCustomerEmails.DeleteCustomer(customerId);
+            return Ok(response);
         }
 
-        [HttpPost("MassUpdateEmail")]
-        public async Task<IActionResult> MassUpdateEmail(string massEmail)
+        [HttpPost("DeleteEmail")]
+        public async Task<IActionResult> DeleteEmail(string emailId)
         {
-            return null;
-        }
-
-        [HttpPost("UpdateEmailForCustomer")]
-        public async Task<IActionResult> UpdateEmailForCustomer(NewEmailRequest email)
-        {
-            return null;
+            var response = await _blCustomerEmails.DeleteEmail(emailId);
+            return Ok(response);
         }        
+
+        [HttpPost("SendEmailToCustomer")]
+        public async Task<IActionResult> SendEmailToCustomer(NewEmailRequest email)
+        {
+            var customerEmail = await _blCustomerEmails.SendNewEmail(email);
+            return Ok(customerEmail);
+        }
+
+        [HttpPost("UpdateDraftEmail")]
+        public async Task<IActionResult> UpdateDraftEmail(UpdateEmailRequest email)
+        {
+            var draftEmail = await _blCustomerEmails.UpdateDraftEmail(email);
+            return Ok(draftEmail);
+        }
 
         #endregion
 

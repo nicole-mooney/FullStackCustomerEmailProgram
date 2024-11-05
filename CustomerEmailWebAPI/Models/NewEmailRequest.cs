@@ -2,7 +2,7 @@
 {
     public class NewEmailRequest
     {
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
         public string Message { get; set; }
     }
 }

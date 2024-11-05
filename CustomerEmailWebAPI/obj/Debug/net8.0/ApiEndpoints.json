@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "CustomerEmailProgram.Controllers.CustomerEmailsController",
+    "Method": "BulkSendEmail",
+    "RelativePath": "api/CustomerEmails/BulkSendEmail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "emailMessage",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CustomerEmailProgram.Controllers.CustomerEmailsController",
     "Method": "CreateNewCustomer",
     "RelativePath": "api/CustomerEmails/CreateNewCustomer",
     "HttpMethod": "POST",
@@ -25,7 +41,23 @@
     "Parameters": [
       {
         "Name": "customerId",
-        "Type": "System.Int32",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CustomerEmailProgram.Controllers.CustomerEmailsController",
+    "Method": "DeleteEmail",
+    "RelativePath": "api/CustomerEmails/DeleteEmail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "emailId",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],
@@ -43,24 +75,8 @@
   },
   {
     "ContainingType": "CustomerEmailProgram.Controllers.CustomerEmailsController",
-    "Method": "MassUpdateEmail",
-    "RelativePath": "api/CustomerEmails/MassUpdateEmail",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "massEmail",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CustomerEmailProgram.Controllers.CustomerEmailsController",
-    "Method": "UpdateEmailForCustomer",
-    "RelativePath": "api/CustomerEmails/UpdateEmailForCustomer",
+    "Method": "SendEmailToCustomer",
+    "RelativePath": "api/CustomerEmails/SendEmailToCustomer",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -68,6 +84,22 @@
       {
         "Name": "email",
         "Type": "CustomerEmailProgram.Models.NewEmailRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CustomerEmailProgram.Controllers.CustomerEmailsController",
+    "Method": "UpdateDraftEmail",
+    "RelativePath": "api/CustomerEmails/UpdateDraftEmail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "CustomerEmailProgram.Models.UpdateEmailRequest",
         "IsRequired": true
       }
     ],
