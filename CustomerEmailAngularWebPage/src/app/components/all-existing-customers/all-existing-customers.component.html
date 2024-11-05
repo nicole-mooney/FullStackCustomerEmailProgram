@@ -1,4 +1,12 @@
   <div class="customer-table-display">
+    <header>
+        <title>This is the customer email table</title>
+        <div>
+            <button>Click me for a bulk email to all customers</button>
+            <button>Click me to add a new customer.</button>
+            <button>Click me to refresh the table.</button>
+        </div>
+    </header>
     <table class="customer-table">
         <thead>
           <tr>
@@ -12,10 +20,8 @@
             <td>{{ email.customerName }}</td>
             <td>{{ email.message }}</td>
             <ng-container>
-                <button>Click Me</button>
-                <!-- <button (click)="delete(email)" class="btn btn-danger btn-sm">
-                    <span class="oi oi-trash"></span>
-                  </button> -->
+                <button (click)="deleteCustomerEmail(email)" class="btn btn-secondary btn-sm"><i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
               </ng-container>
           </tr>
         </tbody>
