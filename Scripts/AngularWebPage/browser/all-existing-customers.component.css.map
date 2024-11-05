@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["src/app/components/all-existing-customers/all-existing-customers.component.scss"],
-  "sourcesContent": [".customer-table-display {\r\n    margin-right: 30px;\r\n    margin-left: 30px;\r\n    border-width: 1px;\r\n\r\n    .customer-table {\r\n        thead {\r\n            vertical-align: bottom; \r\n        }\r\n        tr, th, td {\r\n            border-color: inherit;\r\n            border-style: solid;\r\n            border-width: 1px;\r\n        }\r\n    }\r\n}\r\n"],
-  "mappings": ";AAAA,CAAA;AACI,gBAAA;AACA,eAAA;AACA,gBAAA;;AAGI,CANR,uBAMQ,CAAA,eAAA;AACI,kBAAA;;AAEJ,CATR,uBASQ,CAHA,eAGA;AAAA,CATR,uBASQ,CAHA,eAGA;AAAA,CATR,uBASQ,CAHA,eAGA;AACI,gBAAA;AACA,gBAAA;AACA,gBAAA;;",
+  "sourcesContent": [".customer-table-display {\r\n    margin-right: 30px;\r\n    margin-left: 30px;\r\n    border-width: 1px;\r\n\r\n    .customer-table {\r\n        thead {\r\n            vertical-align: bottom; \r\n        }\r\n        tr, th, td {\r\n            border-color: inherit;\r\n            border-style: solid;\r\n            border-width: 1px;\r\n        }\r\n        .action-items {\r\n            width: 10%\r\n        }\r\n    }\r\n}\r\n"],
+  "mappings": ";AAAA,CAAA;AACI,gBAAA;AACA,eAAA;AACA,gBAAA;;AAGI,CANR,uBAMQ,CAAA,eAAA;AACI,kBAAA;;AAEJ,CATR,uBASQ,CAHA,eAGA;AAAA,CATR,uBASQ,CAHA,eAGA;AAAA,CATR,uBASQ,CAHA,eAGA;AACI,gBAAA;AACA,gBAAA;AACA,gBAAA;;AAEJ,CAdR,uBAcQ,CARA,eAQA,CAAA;AACI,SAAA;;",
   "names": []
 }
