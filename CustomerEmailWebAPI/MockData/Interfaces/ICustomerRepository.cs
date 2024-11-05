@@ -2,10 +2,10 @@
 
 namespace CustomerEmailProgram.MockRepository.Interfaces
 {
-    interface ICustomerRepository
+    public interface ICustomerRepository
     {
         void Create(Customer newCustomer);
-        IEnumerable<Customer> Get();
+        IEnumerable<Customer> GetAll();
         void Update(Customer customer);
         void UpdateAll(List<Customer> customers);
     }

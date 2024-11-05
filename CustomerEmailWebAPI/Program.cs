@@ -1,3 +1,11 @@
+using CustomerEmailProgram.Business.Interfaces;
+using CustomerEmailProgram.Business.Services;
+using CustomerEmailProgram.Controllers;
+using CustomerEmailProgram.Data.Interfaces;
+using CustomerEmailProgram.Data.Services;
+using CustomerEmailProgram.MockRepository.Interfaces;
+using CustomerEmailProgram.MockRepository.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,6 +25,11 @@ builder.Services.AddCors(connectionToAngular =>
         .AllowCredentials();
     });
 });
+
+builder.Services.AddTransient<IBLCustomerEmails, BLCustomerEmails>();
+builder.Services.AddTransient<IDLCustomerEmails, DLCustomerEmails>();
+builder.Services.AddTransient<IEmailRepository, EmailRepository>();
+builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
 
 var app = builder.Build();
 

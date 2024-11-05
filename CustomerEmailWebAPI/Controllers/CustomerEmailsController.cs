@@ -1,3 +1,4 @@
+using CustomerEmailProgram.Business.Interfaces;
 using CustomerEmailProgram.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +9,12 @@ namespace CustomerEmailProgram.Controllers
     public class CustomerEmailsController : ControllerBase
     {
         private readonly ILogger<CustomerEmailsController> _logger;
+        private readonly IBLCustomerEmails _blCustomerEmails;
 
-        public CustomerEmailsController(ILogger<CustomerEmailsController> logger)
+        public CustomerEmailsController(ILogger<CustomerEmailsController> logger, IBLCustomerEmails bLCustomerEmails)
         {
             _logger = logger;
+            _blCustomerEmails = bLCustomerEmails;
         }
 
         #region GET WebAPI Calls
@@ -19,7 +22,7 @@ namespace CustomerEmailProgram.Controllers
         [HttpGet("GetCustomerEmails")]
         public async Task<IActionResult> GetCustomerEmails()
         {
-            var response = new List<Customer>();
+            var response = await _blCustomerEmails.GetAllCustomerEmails();
             return Ok(response);
         }
 

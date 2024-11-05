@@ -1,4 +1,25 @@
-<div>
-    This is the all customers table to display all customers currently in the system
-    <button (click)="testAPIService()">Click me to test API</button>
-</div>
+  <div class="customer-table-display">
+    <table class="customer-table">
+        <thead>
+          <tr>
+            <th scope="col">Customer</th>
+            <th scope="col">Email Contents</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let email of customerEmailData">
+            <td>{{ email.customerName }}</td>
+            <td>{{ email.message }}</td>
+            <ng-container>
+                <button>Click Me</button>
+                <!-- <button (click)="delete(email)" class="btn btn-danger btn-sm">
+                    <span class="oi oi-trash"></span>
+                  </button> -->
+              </ng-container>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  
+  

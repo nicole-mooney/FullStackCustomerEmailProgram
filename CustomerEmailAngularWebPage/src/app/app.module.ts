@@ -1,11 +1,11 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { NavModule } from './nav.module';
-import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
-import { appConfig } from './app.config';
+import { provideHttpClient } from '@angular/common/http';
+import { provideNgxWebstorage } from 'ngx-webstorage';
+import { MatTableModule } from '@angular/material/table';  
 
 @NgModule({
   declarations: [
@@ -14,8 +14,9 @@ import { appConfig } from './app.config';
     AppComponent,
     NavModule,
     RouterModule,
+    MatTableModule,
   ],
-  providers: [appConfig.providers],
+  providers: [provideHttpClient(), provideNgxWebstorage()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

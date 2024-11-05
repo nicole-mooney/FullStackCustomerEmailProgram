@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { CustomerEmailService } from '../../services/customer-email.service';
-import { HttpHeaders } from '@angular/common/http';
-import { Customer } from '../../models/customer';
 import { SessionStorageService } from 'ngx-webstorage';
+import { CustomerEmail } from '../../models/customerEmail';
 
 @Component({
   selector: 'all-existing-customers',
@@ -12,21 +10,21 @@ import { SessionStorageService } from 'ngx-webstorage';
 })
 export class CustomersComponent implements OnInit {
 
-
-    constructor(private apiService: CustomerEmailService, private session: SessionStorageService) { }
+  displayedColumns: string[] = ['customerName', 'message', 'empty'];
+  customerEmailData: CustomerEmail[] = [];
+  
+    constructor(private apiService: CustomerEmailService) { }
 
   ngOnInit() {
-    this.session.store('lastCustomerSelected', 'First Customer');
-    console.log("you have hit the all-existing-customers ts file");
+    this.getAllCustomerEmails();
   } 
 
-  testAPIService() {
-    console.log("We are in the function");
+  getAllCustomerEmails() {
     this.apiService.testAPI().subscribe((output) => {
-
-        console.log(output);
-
+        this.customerEmailData = output;
     });
-    const lastCustomerTouched = this.session.retrieve('lastCustomerSelected');
+  }
+
+  sendEmailToCustomer(customerId: string) {
   }
 }
