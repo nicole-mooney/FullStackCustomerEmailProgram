@@ -1,0 +1,18 @@
+<div class="new-customer-form">  
+    <div class="new-customer-input">
+        <label>What is the customer's first name?</label>
+        <textarea name="firstName" placeholder="Jane" [(ngModel)]="firstName"></textarea>
+    </div>
+    <div class="new-customer-input">
+        <label>What is the customer's last name?</label>
+        <textarea name="lastName" placeholder="Doe" [(ngModel)]="lastName"></textarea>
+    </div>
+    <div class="send-email-input">
+        <label>What would you like the email to be?</label>
+        <textarea name="initialMessage" placeholder="Dear Customer, Please..." [(ngModel)]="initialMessage"></textarea>
+    </div>
+</div>
+<footer>
+    <button class="btn btn-primary" (click)="createCustomer()">Create New Customer</button>
+    <button class="btn btn-secondary" (click)="closeDialog()">Close</button>
+</footer>

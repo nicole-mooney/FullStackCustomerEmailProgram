@@ -2,23 +2,36 @@ import { NgModule } from '@angular/core';
 
 import { CustomersComponent } from './components/all-existing-customers/all-existing-customers.component';
 import { CommonModule } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';  
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatDialogModule } from '@angular/material/dialog';  
+import { MatInputModule } from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import { SendEmailDialog } from './shared/dialogs/send-email/send-email.dialog';
+import { NewCustomerFormDialog } from './shared/dialogs/new-customer-form/new-customer-form.dialog';
 
 @NgModule({
   declarations: [
-    CustomersComponent
+    CustomersComponent,
+    SendEmailDialog,
+    NewCustomerFormDialog,
   ],
   imports: [
-    CommonModule,
     MatTableModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatDialogModule,
+    CommonModule,
+    FormsModule,
   ],
   exports: [
     CustomersComponent,
+    SendEmailDialog,
+    NewCustomerFormDialog,
     MatTableModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatDialogModule,
+    FormsModule
   ],
 })
 export class NavModule { }

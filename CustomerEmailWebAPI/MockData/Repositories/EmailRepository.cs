@@ -1,6 +1,7 @@
 ﻿using CustomerEmailProgram.MockData.GlobalGuids;
 using CustomerEmailProgram.MockRepository.Interfaces;
 using CustomerEmailProgram.Models;
+using Moq;
 
 namespace CustomerEmailProgram.MockRepository.Repositories
 {

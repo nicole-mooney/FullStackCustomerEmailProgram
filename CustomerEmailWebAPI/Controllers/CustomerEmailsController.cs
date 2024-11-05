@@ -31,7 +31,7 @@ namespace CustomerEmailProgram.Controllers
         #region POST WebAPI Calls
 
         [HttpPost("BulkSendEmail")]
-        public async Task<IActionResult> BulkSendEmail(string emailMessage)
+        public async Task<IActionResult> BulkSendEmail([FromBody] string emailMessage)
         {
             var response = await _blCustomerEmails.BulkSendEmail(emailMessage);
             return Ok(response);
@@ -45,14 +45,14 @@ namespace CustomerEmailProgram.Controllers
         }
 
         [HttpPost("DeleteCustomer")]
-        public async Task<IActionResult> DeleteCustomer(string customerId)
+        public async Task<IActionResult> DeleteCustomer([FromBody] string customerId)
         {
             var response = await _blCustomerEmails.DeleteCustomer(customerId);
             return Ok(response);
         }
 
         [HttpPost("DeleteEmail")]
-        public async Task<IActionResult> DeleteEmail(string emailId)
+        public async Task<IActionResult> DeleteEmail([FromBody] string emailId)
         {
             var response = await _blCustomerEmails.DeleteEmail(emailId);
             return Ok(response);

@@ -141,3 +141,5 @@ C:\Users\PlayfulPsychoAdmin\Source\Repos\FullStackCustomerEmailProgram-LOCAL\Cus
 C:\Users\PlayfulPsychoAdmin\Source\Repos\FullStackCustomerEmailProgram-LOCAL\CustomerEmailWebAPI\obj\Debug\net8.0\CustomerEmailProgram.pdb
 C:\Users\PlayfulPsychoAdmin\Source\Repos\FullStackCustomerEmailProgram-LOCAL\CustomerEmailWebAPI\obj\Debug\net8.0\CustomerEmailProgram.genruntimeconfig.cache
 C:\Users\PlayfulPsychoAdmin\Source\Repos\FullStackCustomerEmailProgram-LOCAL\CustomerEmailWebAPI\obj\Debug\net8.0\ref\CustomerEmailProgram.dll
+C:\Users\PlayfulPsychoAdmin\Source\Repos\FullStackCustomerEmailProgram-LOCAL\CustomerEmailWebAPI\bin\Debug\net8.0\Castle.Core.dll
+C:\Users\PlayfulPsychoAdmin\Source\Repos\FullStackCustomerEmailProgram-LOCAL\CustomerEmailWebAPI\bin\Debug\net8.0\Moq.dll

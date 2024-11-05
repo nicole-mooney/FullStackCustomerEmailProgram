@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/app.component.scss"],
+  "sourcesContent": ["fa-icon {\r\n    margin-right: 5px;\r\n}"],
+  "mappings": ";AAAA;AACI,gBAAA;;",
+  "names": []
+}

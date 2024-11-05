@@ -1,18 +1,10 @@
-  <div class="customer-table-display">
-    <header>
-        <title>This is the customer email table</title>
-        <div>
-            <button>Click me for a bulk email to all customers</button>
-            <button>Click me to add a new customer.</button>
-            <button>Click me to refresh the table.</button>
-        </div>
-    </header>
+  <div class="customer-table-display">    
     <table class="customer-table">
         <thead>
           <tr>
             <th scope="col">Customer</th>
             <th scope="col">Email Contents</th>
-            <th scope="col"></th>
+            <th scope="col" class="action-items"></th>
           </tr>
         </thead>
         <tbody>
@@ -20,9 +12,17 @@
             <td>{{ email.customerName }}</td>
             <td>{{ email.message }}</td>
             <ng-container>
-                <button (click)="deleteCustomerEmail(email)" class="btn btn-secondary btn-sm"><i class="fa fa-trash" aria-hidden="true"></i>
+                <button (click)="openSendEmailDialog(email)" class="btn btn-primary btn-sm">
+                    <fa-icon [icon]="faEnvelope"></fa-icon>
                 </button>
-              </ng-container>
+                <button (click)="deleteCustomerEmail(email)" class="btn btn-secondary btn-sm">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+                <button (click)="deleteCustomer(email)" class="btn btn-secondary btn-sm">
+                    <fa-icon [icon]="faPerson"></fa-icon>
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                </button>                
+            </ng-container>
           </tr>
         </tbody>
       </table>

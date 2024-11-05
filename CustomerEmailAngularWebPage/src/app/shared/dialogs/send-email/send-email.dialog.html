@@ -1,0 +1,11 @@
+<div class="send-email-form">  
+    <div class="send-email-input">
+        <label>What would you like the email to be?</label>
+        <textarea name="emailMessage" placeholder="Dear Customer, Please..." [(ngModel)]="emailMessage"></textarea>
+    </div>
+</div>
+<footer>
+    <button class="btn btn-primary" (click)="sendEmail()">Send Email</button>
+    <button class="btn btn-secondary" (click)="closeDialog()">Close</button>
+</footer>
+  

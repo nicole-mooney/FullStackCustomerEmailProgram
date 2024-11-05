@@ -10,7 +10,7 @@
       {
         "Name": "emailMessage",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -42,7 +42,7 @@
       {
         "Name": "customerId",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -58,7 +58,7 @@
       {
         "Name": "emailId",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

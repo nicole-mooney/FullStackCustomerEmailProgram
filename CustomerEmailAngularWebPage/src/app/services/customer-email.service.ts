@@ -18,25 +18,24 @@ export class CustomerEmailService {
     constructor(private httpClient: HttpClient) { }
     
     public bulkSendEmail(emailMessage: string): any {
-      return this.httpClient.post<boolean>(this.apiPath + 'CustomerEmails/BulkSendEmail', JSON.stringify(emailMessage),{headers: this.apiHeader});
+      return this.httpClient.post<boolean>(this.apiPath + 'CustomerEmails/BulkSendEmail', JSON.stringify(emailMessage), {headers: this.apiHeader});
     }
     public createCustomer(newCustomer: NewCustomerRequest): any {
-
-      return this.httpClient.post<boolean>(this.apiPath + 'CustomerEmails/GetCustomerEmails', JSON.stringify(newCustomer),{headers: this.apiHeader});
+      return this.httpClient.post<boolean>(this.apiPath + 'CustomerEmails/CreateNewCustomer', JSON.stringify(newCustomer),{headers: this.apiHeader});
     }
     public deleteCustomer(customerId: string): any {
-      return this.httpClient.post<boolean>(this.apiPath + 'CustomerEmails/GetCustomerEmails', JSON.stringify(customerId),{headers: this.apiHeader});
+      return this.httpClient.post<boolean>(this.apiPath + 'CustomerEmails/DeleteCustomer', JSON.stringify(customerId), {headers: this.apiHeader});
     }
     public deleteEmail(emailId: string): any {
-      return this.httpClient.post<boolean>(this.apiPath + 'CustomerEmails/GetCustomerEmails', JSON.stringify(emailId),{headers: this.apiHeader});
+      return this.httpClient.post<boolean>(this.apiPath + 'CustomerEmails/DeleteEmail', JSON.stringify(emailId), {headers: this.apiHeader});
     }
     public getAllCustomerEmails(): Observable<CustomerEmail[]> {
       return this.httpClient.get<CustomerEmail[]>(this.apiPath + 'CustomerEmails/GetCustomerEmails', {headers: this.apiHeader, withCredentials: true});
   }
     public sendNewEmail(newCustomerEmail: NewEmailRequest): any {
-      return this.httpClient.post<CustomerEmail>(this.apiPath + 'CustomerEmails/GetCustomerEmails', JSON.stringify(newCustomerEmail),{headers: this.apiHeader});
+      return this.httpClient.post<CustomerEmail>(this.apiPath + 'CustomerEmails/SendEmailToCustomer', JSON.stringify(newCustomerEmail),{headers: this.apiHeader});
     }
     public updateDraftEmail(draftEmail: UpdateEmailRequest): any {
-      return this.httpClient.post<CustomerEmail>(this.apiPath + 'CustomerEmails/GetCustomerEmails', JSON.stringify(draftEmail),{headers: this.apiHeader});
+      return this.httpClient.post<CustomerEmail>(this.apiPath + 'CustomerEmails/UpdateDraftEmail', JSON.stringify(draftEmail),{headers: this.apiHeader});
     }
 }
