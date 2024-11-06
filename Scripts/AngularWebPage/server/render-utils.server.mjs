@@ -14,7 +14,7 @@ import {
   renderModule,
   resetCompiledComponents,
   whenStable
-} from "./chunk-3ZCUASIX.mjs";
+} from "./chunk-DWA6WPRX.mjs";
 import {
   __asyncGenerator,
   __await,

@@ -8,6 +8,7 @@ import { SendEmailDialog } from './shared/dialogs/send-email/send-email.dialog';
 import { CustomerEmail } from './models/customer-email';
 import { NewCustomerFormDialog } from './shared/dialogs/new-customer-form/new-customer-form.dialog';
 import { CustomerEmailService } from './services/customer-email.service';
+import { SessionStorageLocalService } from './services/session-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -23,8 +24,7 @@ export class AppComponent implements OnInit {
   isReady = false;
   
   constructor(private apiService: CustomerEmailService, 
-    private dialog: MatDialog,
-  ) { }
+    private dialog: MatDialog, private sessionStore: SessionStorageLocalService) { }
 
   ngOnInit() {
     this.getAllCustomerEmails();
@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
   getAllCustomerEmails() {
     this.apiService.getAllCustomerEmails().subscribe((output) => {
         this.customerEmailData = output;
+        this.storeData(-1);
         this.isReady = true;
     });
   }
@@ -69,5 +70,9 @@ export class AppComponent implements OnInit {
       this.customerEmailData = newTable;
       this.isReady = true;    
     });
+  }
+
+  private storeData(index: number) {
+    this.sessionStore.setItem('customerLastTouchedIndex', index.toString());
   }
 }

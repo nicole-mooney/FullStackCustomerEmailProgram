@@ -7,10 +7,10 @@
             <th scope="col" class="action-items"></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="isReady">
           <tr *ngFor="let email of emailTableData">
-            <td>{{ email.customerName }}</td>
-            <td>{{ email.message }}</td>
+            <td [ngClass]="selectedCustomer === email ? 'selected-customer' : 'regular-customer'">{{ email.customerName }}</td>
+            <td [ngClass]="selectedCustomer === email ? 'selected-customer' : 'regular-customer'">{{ email.message }}</td>
             <ng-container>
                 <button class="btn btn-primary btn-sm" (click)="openSendEmailDialog(email)" title="Send new email to {{email.customerName}}">
                     <fa-icon [icon]="faEnvelope"></fa-icon>

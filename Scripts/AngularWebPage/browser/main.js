@@ -56251,9 +56251,11 @@ var SendEmailDialog = class _SendEmailDialog {
     if (this.inputData.isBulkEmail) {
       this.apiService.bulkSendEmail(this.emailMessage).subscribe((sent) => {
         if (sent) {
-          let customers = this.output.map((customerEmail) => ({ id: customerEmail.customerId, name: customerEmail.customerName })).filter((value, index, self) => self.indexOf(value) === index);
+          let customers = [
+            ...new Set(this.output.map((ce) => ce.customerId))
+          ].map((id) => this.output.find((p) => p.customerId === id));
           customers.forEach((c2) => {
-            this.output.push(new CustomerEmail(c2.name, c2.id, this.emailMessage, "00000000-0000-0000-0000-000000000000", false, /* @__PURE__ */ new Date(), /* @__PURE__ */ new Date()));
+            this.output.unshift(new CustomerEmail(c2.customerName, c2.customerId, this.emailMessage, "00000000-0000-0000-0000-000000000000", false, /* @__PURE__ */ new Date(), /* @__PURE__ */ new Date()));
           });
           this.closeDialog();
         }
@@ -56261,7 +56263,7 @@ var SendEmailDialog = class _SendEmailDialog {
     } else {
       this.apiService.sendNewEmail(new NewEmailRequest(this.inputData.customerId, this.emailMessage)).subscribe((sent) => {
         if (sent) {
-          this.output.push(new CustomerEmail("existing customer sent again - this is a filler", this.inputData.customerId, this.emailMessage, "00000000-0000-0000-0000-000000000000", false, /* @__PURE__ */ new Date(), /* @__PURE__ */ new Date()));
+          this.output.unshift(new CustomerEmail(this.inputData.customerName, this.inputData.customerId, this.emailMessage, "00000000-0000-0000-0000-000000000000", false, /* @__PURE__ */ new Date(), /* @__PURE__ */ new Date()));
           this.closeDialog();
         }
       });
@@ -56270,39 +56272,62 @@ var SendEmailDialog = class _SendEmailDialog {
   static \u0275fac = function SendEmailDialog_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _SendEmailDialog)(\u0275\u0275directiveInject(MatDialogRef), \u0275\u0275directiveInject(MAT_DIALOG_DATA), \u0275\u0275directiveInject(CustomerEmailService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SendEmailDialog, selectors: [["send-email"]], decls: 10, vars: 1, consts: [[1, "send-email-form"], [1, "send-email-input"], ["name", "emailMessage", "placeholder", "Dear Customer, Please...", 3, "ngModelChange", "ngModel"], [1, "btn", "btn-primary", 3, "click"], [1, "btn", "btn-secondary", 3, "click"]], template: function SendEmailDialog_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SendEmailDialog, selectors: [["send-email"]], decls: 15, vars: 1, consts: [[1, "send-email-dialog"], [1, "send-email-form"], ["name", "emailMessage", "placeholder", "Dear Customer, Please...", 1, "send-email-input", 3, "ngModelChange", "ngModel"], [1, "btn", "btn-primary", "send-email-btn", 3, "click"], [1, "btn", "btn-secondary", "close-dialog-btn", 3, "click"]], template: function SendEmailDialog_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "div", 0)(1, "div", 1)(2, "label");
-      \u0275\u0275text(3, "What would you like the email to be?");
+      \u0275\u0275elementStart(0, "div", 0)(1, "header")(2, "h4");
+      \u0275\u0275text(3, "Send Email to Customer(s)");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(4, "body")(5, "div", 1)(6, "label");
+      \u0275\u0275text(7, "What would you like the email to be?");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(4, "textarea", 2);
-      \u0275\u0275twoWayListener("ngModelChange", function SendEmailDialog_Template_textarea_ngModelChange_4_listener($event) {
+      \u0275\u0275elementStart(8, "div")(9, "textarea", 2);
+      \u0275\u0275twoWayListener("ngModelChange", function SendEmailDialog_Template_textarea_ngModelChange_9_listener($event) {
         \u0275\u0275twoWayBindingSet(ctx.emailMessage, $event) || (ctx.emailMessage = $event);
         return $event;
       });
-      \u0275\u0275elementEnd()()();
-      \u0275\u0275elementStart(5, "footer")(6, "button", 3);
-      \u0275\u0275listener("click", function SendEmailDialog_Template_button_click_6_listener() {
+      \u0275\u0275elementEnd()()()();
+      \u0275\u0275elementStart(10, "footer")(11, "button", 3);
+      \u0275\u0275listener("click", function SendEmailDialog_Template_button_click_11_listener() {
         return ctx.sendEmail();
       });
-      \u0275\u0275text(7, "Send Email");
+      \u0275\u0275text(12, "Send Email");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(8, "button", 4);
-      \u0275\u0275listener("click", function SendEmailDialog_Template_button_click_8_listener() {
+      \u0275\u0275elementStart(13, "button", 4);
+      \u0275\u0275listener("click", function SendEmailDialog_Template_button_click_13_listener() {
         return ctx.closeDialog();
       });
-      \u0275\u0275text(9, "Close");
-      \u0275\u0275elementEnd()();
+      \u0275\u0275text(14, "Close");
+      \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
-      \u0275\u0275advance(4);
+      \u0275\u0275advance(9);
       \u0275\u0275twoWayProperty("ngModel", ctx.emailMessage);
     }
-  }, dependencies: [DefaultValueAccessor, NgControlStatus, NgModel] });
+  }, dependencies: [DefaultValueAccessor, NgControlStatus, NgModel], styles: ["\n\n.send-email-dialog[_ngcontent-%COMP%] {\n  padding: 30px;\n}\n.send-email-dialog[_ngcontent-%COMP%]   .send-email-input[_ngcontent-%COMP%] {\n  margin: auto;\n  display: block;\n}\nfooter[_ngcontent-%COMP%] {\n  padding-top: 10px;\n}\nfooter[_ngcontent-%COMP%]   .close-dialog-btn[_ngcontent-%COMP%] {\n  float: right;\n}\n/*# sourceMappingURL=send-email.dialog.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SendEmailDialog, { className: "SendEmailDialog", filePath: "src\\app\\shared\\dialogs\\send-email\\send-email.dialog.ts", lineNumber: 18 });
 })();
+
+// src/app/services/session-storage.service.ts
+var SessionStorageLocalService = class _SessionStorageLocalService {
+  setItem(key, value) {
+    sessionStorage.setItem(key, value);
+  }
+  getItem(key) {
+    return sessionStorage.getItem(key);
+  }
+  removeItem(key) {
+    sessionStorage.removeItem(key);
+  }
+  clear() {
+    sessionStorage.clear();
+  }
+  static \u0275fac = function SessionStorageLocalService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _SessionStorageLocalService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _SessionStorageLocalService, factory: _SessionStorageLocalService.\u0275fac, providedIn: "root" });
+};
 
 // node_modules/@fortawesome/fontawesome-svg-core/index.mjs
 var noop4 = () => {
@@ -59823,36 +59848,36 @@ var FontAwesomeModule = class _FontAwesomeModule {
 function CustomersComponent_tr_10_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "tr")(1, "td");
+    \u0275\u0275elementStart(0, "tr")(1, "td", 5);
     \u0275\u0275text(2);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "td");
+    \u0275\u0275elementStart(3, "td", 5);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementContainerStart(5);
-    \u0275\u0275elementStart(6, "button", 5);
+    \u0275\u0275elementContainerStart(5, 6);
+    \u0275\u0275elementStart(6, "button", 7);
     \u0275\u0275listener("click", function CustomersComponent_tr_10_Template_button_click_6_listener() {
       const email_r2 = \u0275\u0275restoreView(_r1).$implicit;
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.openSendEmailDialog(email_r2));
     });
-    \u0275\u0275element(7, "fa-icon", 6);
+    \u0275\u0275element(7, "fa-icon", 8);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "button", 7);
+    \u0275\u0275elementStart(8, "button", 9);
     \u0275\u0275listener("click", function CustomersComponent_tr_10_Template_button_click_8_listener() {
       const email_r2 = \u0275\u0275restoreView(_r1).$implicit;
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.deleteCustomerEmail(email_r2));
     });
-    \u0275\u0275element(9, "fa-icon", 6);
+    \u0275\u0275element(9, "fa-icon", 8);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(10, "button", 7);
+    \u0275\u0275elementStart(10, "button", 10);
     \u0275\u0275listener("click", function CustomersComponent_tr_10_Template_button_click_10_listener() {
       const email_r2 = \u0275\u0275restoreView(_r1).$implicit;
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.deleteCustomer(email_r2));
     });
-    \u0275\u0275element(11, "fa-icon", 6)(12, "fa-icon", 6);
+    \u0275\u0275element(11, "fa-icon", 8)(12, "fa-icon", 8);
     \u0275\u0275elementEnd();
     \u0275\u0275elementContainerEnd();
     \u0275\u0275elementEnd();
@@ -59864,11 +59889,15 @@ function CustomersComponent_tr_10_Template(rf, ctx) {
     \u0275\u0275textInterpolate(email_r2.customerName);
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate(email_r2.message);
-    \u0275\u0275advance(3);
+    \u0275\u0275advance(2);
+    \u0275\u0275propertyInterpolate1("title", "Send new email to ", email_r2.customerName, "");
+    \u0275\u0275advance();
     \u0275\u0275property("icon", ctx_r2.faEnvelope);
     \u0275\u0275advance(2);
     \u0275\u0275property("icon", ctx_r2.faTrash);
-    \u0275\u0275advance(2);
+    \u0275\u0275advance();
+    \u0275\u0275propertyInterpolate1("title", "Delete ", email_r2.customerName, " and all emails associated with customer");
+    \u0275\u0275advance();
     \u0275\u0275property("icon", ctx_r2.faPerson);
     \u0275\u0275advance();
     \u0275\u0275property("icon", ctx_r2.faTrash);
@@ -59877,43 +59906,48 @@ function CustomersComponent_tr_10_Template(rf, ctx) {
 var CustomersComponent = class _CustomersComponent {
   apiService;
   dialog;
+  sessionStore;
   faTrash = faTrash;
   faEnvelope = faEnvelope;
   faPerson = faPerson;
   displayedColumns = ["customerName", "message", "empty"];
-  customerEmailData = [];
-  constructor(apiService, dialog) {
+  emailTableData = [];
+  selectedCustomer;
+  data = [];
+  constructor(apiService, dialog, sessionStore) {
     this.apiService = apiService;
     this.dialog = dialog;
+    this.sessionStore = sessionStore;
   }
   // initial load of html page. Get necessary data to display.
   ngOnInit() {
-    this.getAllCustomerEmails();
+    this.emailTableData = this.data;
   }
-  // call service for getting all existing customer emails
-  getAllCustomerEmails() {
-    this.apiService.getAllCustomerEmails().subscribe((output) => {
-      this.customerEmailData = output;
-    });
+  ngOnChanges(changes) {
+    if (changes["data"]) {
+      this.emailTableData = this.data;
+    }
   }
   // open send email dialog
   openSendEmailDialog(ce) {
     let dialogRef = this.dialog.open(SendEmailDialog, {
-      data: { customerId: ce.customerId },
+      data: { customerName: ce.customerName, customerId: ce.customerId },
+      width: "fit-content",
+      height: "fit-content",
       position: {
-        top: "-50%",
-        left: "10%"
+        top: "-60%",
+        left: "40%"
       }
     }).afterClosed().subscribe((newTable) => {
-      this.customerEmailData = newTable;
+      this.emailTableData = newTable;
     });
   }
   // call service for deleting email
   deleteCustomerEmail(email) {
     this.apiService.deleteEmail(email.emailId).subscribe((deleted) => {
       if (deleted) {
-        let index = this.customerEmailData.findIndex((ce) => ce.emailId === email.emailId);
-        this.customerEmailData.splice(index, 1);
+        let index = this.emailTableData.findIndex((ce) => ce.emailId === email.emailId);
+        this.emailTableData.splice(index, 1);
       }
     });
   }
@@ -59921,15 +59955,25 @@ var CustomersComponent = class _CustomersComponent {
   deleteCustomer(ce) {
     this.apiService.deleteCustomer(ce.customerId).subscribe((deleted) => {
       if (deleted) {
-        let index = this.customerEmailData.findIndex((ce2) => ce2.customerId === ce2.customerId);
-        this.customerEmailData.splice(index, 1);
+        var deletedCustomerEmails = this.emailTableData.filter((c2) => c2.customerId === ce.customerId);
+        deletedCustomerEmails.forEach((de) => {
+          let index = this.emailTableData.findIndex((c2) => c2.customerId === de.customerId);
+          this.emailTableData.splice(index, 1);
+        });
       }
     });
   }
+  storeData(index) {
+    this.sessionStore.setItem("customerLastTouchedIndex", index.toString());
+  }
+  retrieveData() {
+    const index = Number(this.sessionStore.getItem("customerLastTouchedIndex"));
+    this.selectedCustomer = this.emailTableData[index];
+  }
   static \u0275fac = function CustomersComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _CustomersComponent)(\u0275\u0275directiveInject(CustomerEmailService), \u0275\u0275directiveInject(MatDialog));
+    return new (__ngFactoryType__ || _CustomersComponent)(\u0275\u0275directiveInject(CustomerEmailService), \u0275\u0275directiveInject(MatDialog), \u0275\u0275directiveInject(SessionStorageLocalService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CustomersComponent, selectors: [["all-existing-customers"]], decls: 11, vars: 1, consts: [[1, "customer-table-display"], [1, "customer-table"], ["scope", "col"], ["scope", "col", 1, "action-items"], [4, "ngFor", "ngForOf"], [1, "btn", "btn-primary", "btn-sm", 3, "click"], [3, "icon"], [1, "btn", "btn-secondary", "btn-sm", 3, "click"]], template: function CustomersComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CustomersComponent, selectors: [["all-existing-customers"]], inputs: { data: "data" }, features: [\u0275\u0275NgOnChangesFeature], decls: 11, vars: 1, consts: [[1, "customer-table-display"], [1, "customer-table"], ["scope", "col"], ["scope", "col", 1, "action-items"], [4, "ngFor", "ngForOf"], [1, "selectedCustomer", "===", "email", "?", "'selected-customer'", ":", "'regular-customer'"], [1, "selectedCustomer", "===", "email", "?", "'regular-customer'", ":", "'selected-customer'"], [1, "btn", "btn-primary", "btn-sm", 3, "click", "title"], [3, "icon"], ["title", "Delete email", 1, "btn", "btn-secondary", "btn-sm", 3, "click"], [1, "btn", "btn-secondary", "btn-sm", 3, "click", "title"]], template: function CustomersComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 0)(1, "table", 1)(2, "thead")(3, "tr")(4, "th", 2);
       \u0275\u0275text(5, "Customer");
@@ -59940,17 +59984,17 @@ var CustomersComponent = class _CustomersComponent {
       \u0275\u0275element(8, "th", 3);
       \u0275\u0275elementEnd()();
       \u0275\u0275elementStart(9, "tbody");
-      \u0275\u0275template(10, CustomersComponent_tr_10_Template, 13, 6, "tr", 4);
+      \u0275\u0275template(10, CustomersComponent_tr_10_Template, 13, 10, "tr", 4);
       \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
       \u0275\u0275advance(10);
-      \u0275\u0275property("ngForOf", ctx.customerEmailData);
+      \u0275\u0275property("ngForOf", ctx.emailTableData);
     }
-  }, dependencies: [FaIconComponent, NgForOf], styles: ["\n\n.customer-table-display[_ngcontent-%COMP%] {\n  margin-right: 30px;\n  margin-left: 30px;\n  border-width: 1px;\n}\n.customer-table-display[_ngcontent-%COMP%]   .customer-table[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%] {\n  vertical-align: bottom;\n}\n.customer-table-display[_ngcontent-%COMP%]   .customer-table[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%], \n.customer-table-display[_ngcontent-%COMP%]   .customer-table[_ngcontent-%COMP%]   th[_ngcontent-%COMP%], \n.customer-table-display[_ngcontent-%COMP%]   .customer-table[_ngcontent-%COMP%]   td[_ngcontent-%COMP%] {\n  border-color: inherit;\n  border-style: solid;\n  border-width: 1px;\n}\n.customer-table-display[_ngcontent-%COMP%]   .customer-table[_ngcontent-%COMP%]   .action-items[_ngcontent-%COMP%] {\n  width: 10%;\n}\n/*# sourceMappingURL=all-existing-customers.component.css.map */"] });
+  }, dependencies: [FaIconComponent, NgForOf], styles: ["\n\n.customer-table-display[_ngcontent-%COMP%] {\n  margin-right: 30px;\n  margin-left: 30px;\n  border-width: 1px;\n}\n.customer-table-display[_ngcontent-%COMP%]   .customer-table[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%] {\n  vertical-align: bottom;\n}\n.customer-table-display[_ngcontent-%COMP%]   .customer-table[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%], \n.customer-table-display[_ngcontent-%COMP%]   .customer-table[_ngcontent-%COMP%]   th[_ngcontent-%COMP%], \n.customer-table-display[_ngcontent-%COMP%]   .customer-table[_ngcontent-%COMP%]   td[_ngcontent-%COMP%] {\n  border-color: inherit;\n  border-style: solid;\n  border-width: 1px;\n}\n.customer-table-display[_ngcontent-%COMP%]   .customer-table[_ngcontent-%COMP%]   .action-items[_ngcontent-%COMP%] {\n  width: 12%;\n}\n.customer-table-display[_ngcontent-%COMP%]   .customer-table[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%] {\n  margin: 7px;\n}\n.selected-customer[_ngcontent-%COMP%] {\n  background-color: #ffffb7;\n}\n.regular-customer[_ngcontent-%COMP%] {\n  background-color: white;\n}\n/*# sourceMappingURL=all-existing-customers.component.css.map */"] });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CustomersComponent, { className: "CustomersComponent", filePath: "src\\app\\components\\all-existing-customers\\all-existing-customers.component.ts", lineNumber: 15 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CustomersComponent, { className: "CustomersComponent", filePath: "src\\app\\components\\all-existing-customers\\all-existing-customers.component.ts", lineNumber: 16 });
 })();
 
 // node_modules/@angular/cdk/fesm2022/table.mjs
@@ -63638,7 +63682,7 @@ var NewCustomerFormDialog = class _NewCustomerFormDialog {
   createCustomer() {
     this.apiService.createCustomer(new NewCustomerRequest(this.firstName, this.lastName, this.initialMessage)).subscribe((output) => {
       if (this.initialMessage) {
-        this.output.push(new CustomerEmail(this.firstName + " " + this.lastName, "00000000-0000-0000-0000-000000000000", this.initialMessage, "00000000-0000-0000-0000-000000000000", false, /* @__PURE__ */ new Date(), /* @__PURE__ */ new Date()));
+        this.output.unshift(new CustomerEmail(this.firstName + " " + this.lastName, "00000000-0000-0000-0000-000000000000", this.initialMessage, "00000000-0000-0000-0000-000000000000", false, /* @__PURE__ */ new Date(), /* @__PURE__ */ new Date()));
       }
       this.closeDialog();
     });
@@ -63646,57 +63690,60 @@ var NewCustomerFormDialog = class _NewCustomerFormDialog {
   static \u0275fac = function NewCustomerFormDialog_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _NewCustomerFormDialog)(\u0275\u0275directiveInject(MatDialogRef), \u0275\u0275directiveInject(CustomerEmailService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _NewCustomerFormDialog, selectors: [["new-customer-form"]], decls: 18, vars: 3, consts: [[1, "new-customer-form"], [1, "new-customer-input"], ["name", "firstName", "placeholder", "Jane", 3, "ngModelChange", "ngModel"], ["name", "lastName", "placeholder", "Doe", 3, "ngModelChange", "ngModel"], [1, "send-email-input"], ["name", "initialMessage", "placeholder", "Dear Customer, Please...", 3, "ngModelChange", "ngModel"], [1, "btn", "btn-primary", 3, "click"], [1, "btn", "btn-secondary", 3, "click"]], template: function NewCustomerFormDialog_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _NewCustomerFormDialog, selectors: [["new-customer-form"]], decls: 23, vars: 3, consts: [[1, "add-new-customer-dialog"], [1, "add-new-customer-form"], [1, "new-customer-first-name-input"], ["name", "firstName", "placeholder", "Jane", 1, "input", 3, "ngModelChange", "ngModel"], [1, "new-customer-last-name-input"], ["name", "lastName", "placeholder", "Doe", 1, "input", 3, "ngModelChange", "ngModel"], [1, "send-email-input"], ["name", "initialMessage", "placeholder", "Dear Customer, Please...", 1, "input", 3, "ngModelChange", "ngModel"], [1, "btn", "btn-primary", "add-customer-btn", 3, "click"], [1, "btn", "btn-secondary", "close-dialog-btn", 3, "click"]], template: function NewCustomerFormDialog_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "div", 0)(1, "div", 1)(2, "label");
-      \u0275\u0275text(3, "What is the customer's first name?");
+      \u0275\u0275elementStart(0, "div", 0)(1, "header")(2, "h4");
+      \u0275\u0275text(3, "Add New Customer");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(4, "body")(5, "div", 1)(6, "label");
+      \u0275\u0275text(7, "What is the customer's first name?");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(4, "textarea", 2);
-      \u0275\u0275twoWayListener("ngModelChange", function NewCustomerFormDialog_Template_textarea_ngModelChange_4_listener($event) {
+      \u0275\u0275elementStart(8, "div", 2)(9, "textarea", 3);
+      \u0275\u0275twoWayListener("ngModelChange", function NewCustomerFormDialog_Template_textarea_ngModelChange_9_listener($event) {
         \u0275\u0275twoWayBindingSet(ctx.firstName, $event) || (ctx.firstName = $event);
         return $event;
       });
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(5, "div", 1)(6, "label");
-      \u0275\u0275text(7, "What is the customer's last name?");
+      \u0275\u0275elementStart(10, "label");
+      \u0275\u0275text(11, "What is the customer's last name?");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(8, "textarea", 3);
-      \u0275\u0275twoWayListener("ngModelChange", function NewCustomerFormDialog_Template_textarea_ngModelChange_8_listener($event) {
+      \u0275\u0275elementStart(12, "div", 4)(13, "textarea", 5);
+      \u0275\u0275twoWayListener("ngModelChange", function NewCustomerFormDialog_Template_textarea_ngModelChange_13_listener($event) {
         \u0275\u0275twoWayBindingSet(ctx.lastName, $event) || (ctx.lastName = $event);
         return $event;
       });
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(9, "div", 4)(10, "label");
-      \u0275\u0275text(11, "What would you like the email to be?");
+      \u0275\u0275elementStart(14, "label");
+      \u0275\u0275text(15, "What would you like the email to be?");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(12, "textarea", 5);
-      \u0275\u0275twoWayListener("ngModelChange", function NewCustomerFormDialog_Template_textarea_ngModelChange_12_listener($event) {
+      \u0275\u0275elementStart(16, "div", 6)(17, "textarea", 7);
+      \u0275\u0275twoWayListener("ngModelChange", function NewCustomerFormDialog_Template_textarea_ngModelChange_17_listener($event) {
         \u0275\u0275twoWayBindingSet(ctx.initialMessage, $event) || (ctx.initialMessage = $event);
         return $event;
       });
-      \u0275\u0275elementEnd()()();
-      \u0275\u0275elementStart(13, "footer")(14, "button", 6);
-      \u0275\u0275listener("click", function NewCustomerFormDialog_Template_button_click_14_listener() {
+      \u0275\u0275elementEnd()()()();
+      \u0275\u0275elementStart(18, "footer")(19, "button", 8);
+      \u0275\u0275listener("click", function NewCustomerFormDialog_Template_button_click_19_listener() {
         return ctx.createCustomer();
       });
-      \u0275\u0275text(15, "Create New Customer");
+      \u0275\u0275text(20, "Create New Customer");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(16, "button", 7);
-      \u0275\u0275listener("click", function NewCustomerFormDialog_Template_button_click_16_listener() {
+      \u0275\u0275elementStart(21, "button", 9);
+      \u0275\u0275listener("click", function NewCustomerFormDialog_Template_button_click_21_listener() {
         return ctx.closeDialog();
       });
-      \u0275\u0275text(17, "Close");
-      \u0275\u0275elementEnd()();
+      \u0275\u0275text(22, "Close");
+      \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
-      \u0275\u0275advance(4);
+      \u0275\u0275advance(9);
       \u0275\u0275twoWayProperty("ngModel", ctx.firstName);
       \u0275\u0275advance(4);
       \u0275\u0275twoWayProperty("ngModel", ctx.lastName);
       \u0275\u0275advance(4);
       \u0275\u0275twoWayProperty("ngModel", ctx.initialMessage);
     }
-  }, dependencies: [DefaultValueAccessor, NgControlStatus, NgModel] });
+  }, dependencies: [DefaultValueAccessor, NgControlStatus, NgModel], styles: ["\n\n.add-new-customer-dialog[_ngcontent-%COMP%] {\n  padding: 30px;\n}\n.add-new-customer-dialog[_ngcontent-%COMP%]   .input[_ngcontent-%COMP%] {\n  margin: auto;\n  display: block;\n}\nfooter[_ngcontent-%COMP%] {\n  padding-top: 10px;\n}\nfooter[_ngcontent-%COMP%]   .close-dialog-btn[_ngcontent-%COMP%] {\n  float: right;\n}\n/*# sourceMappingURL=new-customer-form.dialog.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(NewCustomerFormDialog, { className: "NewCustomerFormDialog", filePath: "src\\app\\shared\\dialogs\\new-customer-form\\new-customer-form.dialog.ts", lineNumber: 19 });
@@ -63707,16 +63754,16 @@ var NavModule = class _NavModule {
   static \u0275fac = function NavModule_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _NavModule)();
   };
-  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({ type: _NavModule });
+  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({ type: _NavModule, bootstrap: [CustomersComponent, SendEmailDialog, NewCustomerFormDialog] });
   static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({ imports: [
     MatTableModule,
     FontAwesomeModule,
     MatDialogModule,
     CommonModule,
     FormsModule,
-    MatTableModule,
     FontAwesomeModule,
     MatDialogModule,
+    CommonModule,
     FormsModule
   ] });
 };
@@ -63729,76 +63776,105 @@ var AppModule = class _AppModule {
   static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({ type: _AppModule, bootstrap: [AppComponent] });
   static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({ providers: [provideHttpClient(), provideNgxWebstorage()], imports: [
     AppComponent,
-    NavModule,
-    RouterModule,
-    MatTableModule,
-    FontAwesomeModule,
-    MatDialogModule
+    NavModule
   ] });
 };
 
 // src/app/app.component.ts
+function AppComponent_all_existing_customers_10_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "all-existing-customers", 5);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275property("data", ctx_r0.customerEmailData);
+  }
+}
 var AppComponent = class _AppComponent {
+  apiService;
   dialog;
   faPeopleGroup = faPeopleGroup;
-  constructor(dialog) {
+  customerEmailData = [];
+  isReady = false;
+  constructor(apiService, dialog) {
+    this.apiService = apiService;
     this.dialog = dialog;
   }
   ngOnInit() {
+    this.getAllCustomerEmails();
+  }
+  // call service for getting all existing customer emails
+  getAllCustomerEmails() {
+    this.apiService.getAllCustomerEmails().subscribe((output) => {
+      this.customerEmailData = output;
+      this.isReady = true;
+    });
   }
   // open send email dialog to bulk send an email to all customers
   openSendEmailDialog() {
     let dialogRef = this.dialog.open(SendEmailDialog, {
       data: { isBulkEmail: true },
+      width: "fit-content",
+      height: "fit-content",
       position: {
-        top: "-50%",
-        left: "10%"
+        top: "-60%",
+        left: "40%"
       }
     }).afterClosed().subscribe((newTable) => {
+      this.isReady = false;
+      this.customerEmailData = newTable;
+      this.isReady = true;
     });
   }
   // open send email dialog to bulk send an email to all customers
   openAddNewCustomerDialog() {
     let dialogRef = this.dialog.open(NewCustomerFormDialog, {
+      width: "fit-content",
+      height: "fit-content",
       position: {
-        top: "-50%",
-        left: "10%"
+        top: "-60%",
+        left: "40%"
       }
     }).afterClosed().subscribe((newTable) => {
+      this.isReady = false;
+      this.customerEmailData = newTable;
+      this.isReady = true;
     });
   }
   static \u0275fac = function AppComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _AppComponent)(\u0275\u0275directiveInject(MatDialog));
+    return new (__ngFactoryType__ || _AppComponent)(\u0275\u0275directiveInject(CustomerEmailService), \u0275\u0275directiveInject(MatDialog));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 11, vars: 1, consts: [[1, "btn", "btn-primary", 3, "click"], [3, "icon"], [1, "btn", "btn-secondary", 3, "click"]], template: function AppComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 11, vars: 2, consts: [[1, "open-dialog-btns"], [1, "btn", "btn-primary", "open-bulk-send-btn", 3, "click"], [3, "icon"], [1, "btn", "btn-secondary", "open-add-new-customer-btn", 3, "click"], [3, "data", 4, "ngIf"], [3, "data"]], template: function AppComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div")(1, "header")(2, "h4");
       \u0275\u0275text(3, "Customer Emails Sent Out");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(4, "div")(5, "button", 0);
+      \u0275\u0275elementStart(4, "div", 0)(5, "button", 1);
       \u0275\u0275listener("click", function AppComponent_Template_button_click_5_listener() {
         return ctx.openSendEmailDialog();
       });
-      \u0275\u0275element(6, "fa-icon", 1);
+      \u0275\u0275element(6, "fa-icon", 2);
       \u0275\u0275text(7, "Bulk Send");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(8, "button", 2);
+      \u0275\u0275elementStart(8, "button", 3);
       \u0275\u0275listener("click", function AppComponent_Template_button_click_8_listener() {
         return ctx.openAddNewCustomerDialog();
       });
       \u0275\u0275text(9, "Add New Customer");
       \u0275\u0275elementEnd()()();
-      \u0275\u0275element(10, "all-existing-customers");
+      \u0275\u0275template(10, AppComponent_all_existing_customers_10_Template, 1, 1, "all-existing-customers", 4);
       \u0275\u0275elementEnd();
     }
     if (rf & 2) {
       \u0275\u0275advance(6);
       \u0275\u0275property("icon", ctx.faPeopleGroup);
+      \u0275\u0275advance(4);
+      \u0275\u0275property("ngIf", ctx.isReady);
     }
-  }, dependencies: [AppModule, NavModule, CustomersComponent, FaIconComponent], styles: ["\n\nfa-icon[_ngcontent-%COMP%] {\n  margin-right: 5px;\n}\n/*# sourceMappingURL=app.component.css.map */"] });
+  }, dependencies: [AppModule, NavModule, CustomersComponent, FaIconComponent, NgIf], styles: ["\n\nfa-icon[_ngcontent-%COMP%] {\n  margin-right: 5px;\n}\n.open-dialog-btns[_ngcontent-%COMP%] {\n  padding-bottom: 15px;\n}\n.open-dialog-btns[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%] {\n  margin-left: 30px;\n}\n/*# sourceMappingURL=app.component.css.map */"] });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src\\app\\app.component.ts", lineNumber: 18 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src\\app\\app.component.ts", lineNumber: 19 });
 })();
 
 // src/main.ts

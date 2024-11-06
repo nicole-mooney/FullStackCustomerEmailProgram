@@ -10,6 +10,7 @@ import { NewEmailRequest } from '../../../models/requests/new-email-request';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { NewCustomerRequest } from '../../../models/requests/new-customer-request';
+import { SessionStorageLocalService } from '../../../services/session-storage.service';
 
 @Component({
   selector: 'new-customer-form',
@@ -24,8 +25,7 @@ export class NewCustomerFormDialog implements OnInit {
   output: CustomerEmail[] = [];
 
   constructor(public dialogRef: MatDialogRef<NewCustomerFormDialog>, 
-    private apiService: CustomerEmailService
-  ) { }
+    private apiService: CustomerEmailService, private sessionStore: SessionStorageLocalService) { }
 
   ngOnInit() {
     this.apiService.getAllCustomerEmails().subscribe((output) => {
@@ -44,8 +44,13 @@ export class NewCustomerFormDialog implements OnInit {
           //However, the correct way would be that getallcustomeremails would return the NEW list instead of the pre-existing one.
           //This is because I did not associated a SQL Database to the application at this time.   
           this.output.unshift(new CustomerEmail(this.firstName + " " + this.lastName, "00000000-0000-0000-0000-000000000000", this.initialMessage, "00000000-0000-0000-0000-000000000000", false, new Date(), new Date()));
+          this.storeData(this.output.findIndex(ce => ce.customerId === "00000000-0000-0000-0000-000000000000" && ce.emailId === "00000000-0000-0000-0000-000000000000"));
         }
         this.closeDialog()
     });
+  }
+
+  private storeData(index: number) {
+    this.sessionStore.setItem('customerLastTouchedIndex', index.toString());
   }
 }

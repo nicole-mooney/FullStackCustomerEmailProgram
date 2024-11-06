@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["src/app/app.component.scss"],
-  "sourcesContent": ["fa-icon {\r\n    margin-right: 5px;\r\n}"],
-  "mappings": ";AAAA;AACI,gBAAA;;",
+  "sourcesContent": ["fa-icon {\r\n    margin-right: 5px;\r\n}\r\n\r\n.open-dialog-btns {\r\n    .btn {\r\n        margin-left: 30px;\r\n    }\r\n    padding-bottom: 15px;\r\n}\r\n"],
+  "mappings": ";AAAA;AACI,gBAAA;;AAGJ,CAAA;AAII,kBAAA;;AAHA,CADJ,iBACI,CAAA;AACI,eAAA;;",
   "names": []
 }

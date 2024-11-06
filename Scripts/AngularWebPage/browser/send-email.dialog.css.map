@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/dialogs/send-email/send-email.dialog.scss"],
+  "sourcesContent": [".send-email-dialog {\r\n    padding: 30px;\r\n\r\n    .send-email-input {\r\n        margin: auto;\r\n        display: block;\r\n    }\r\n}\r\n\r\nfooter {\r\n    padding-top: 10px;\r\n\r\n    .close-dialog-btn {\r\n        float: right;\r\n    }\r\n}\r\n"],
+  "mappings": ";AAAA,CAAA;AACI,WAAA;;AAEA,CAHJ,kBAGI,CAAA;AACI,UAAA;AACA,WAAA;;AAIR;AACI,eAAA;;AAEA,OAAA,CAAA;AACI,SAAA;;",
+  "names": []
+}

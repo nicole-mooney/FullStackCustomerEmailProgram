@@ -6,6 +6,7 @@ import { faTrash, faEnvelope, faPerson } from '@fortawesome/free-solid-svg-icons
 import { MatDialog } from '@angular/material/dialog';
 import { SendEmailDialog } from '../../shared/dialogs/send-email/send-email.dialog';
 import { NewEmailRequest } from '../../models/requests/new-email-request';
+import { SessionStorageLocalService } from '../../services/session-storage.service';
 
 @Component({
   selector: 'all-existing-customers',
@@ -19,26 +20,34 @@ export class CustomersComponent implements OnInit, OnChanges {
     faPerson = faPerson;
     displayedColumns: string[] = ['customerName', 'message', 'empty'];
     emailTableData: CustomerEmail[] = [];
+    isReady = false;
+    selectedCustomer: CustomerEmail;
     @Input() public data: CustomerEmail[] = [];
 
     constructor(private apiService: CustomerEmailService, 
-      private dialog: MatDialog) { }
+      private dialog: MatDialog,
+      private sessionStore: SessionStorageLocalService) { }
 
   // initial load of html page. Get necessary data to display.
   ngOnInit() {
     this.emailTableData = this.data;
+    this.storeData(-1);
+    this.isReady = true;
   }   
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
-      this.emailTableData = this.data;
+      this.isReady = false;
+      this.emailTableData = this.data;      
+      this.retrieveData();
+      this.isReady = true;
     }
-  }
+  } 
   
   // open send email dialog
   openSendEmailDialog(ce: CustomerEmail) {
     let dialogRef = this.dialog.open(SendEmailDialog, {
-      data: { customerName: ce.customerName, customerId: ce.customerId },
+      data: { customerName: ce.customerName, customerId: ce.customerId, emailId: ce.emailId },
       width: 'fit-content',
       height: 'fit-content',
       position: {
@@ -46,7 +55,10 @@ export class CustomersComponent implements OnInit, OnChanges {
         left: '40%',
       }
     }).afterClosed().subscribe((newTable: CustomerEmail[]) => {
+      this.isReady = false;
       this.emailTableData = newTable;
+      this.retrieveData();
+      this.isReady = true;
     });
   }
 
@@ -54,8 +66,12 @@ export class CustomersComponent implements OnInit, OnChanges {
   deleteCustomerEmail(email: CustomerEmail) {
     this.apiService.deleteEmail(email.emailId).subscribe((deleted: boolean) => {
       if (deleted) {
+        this.isReady = false;
         let index = this.emailTableData.findIndex(ce => ce.emailId === email.emailId);
         this.emailTableData.splice(index, 1);
+        this.storeData(this.emailTableData.findIndex(ce => ce.customerId === email.customerId));
+        this.retrieveData();
+        this.isReady = true;
       }
     });
     
@@ -67,10 +83,21 @@ export class CustomersComponent implements OnInit, OnChanges {
       if (deleted) {
         var deletedCustomerEmails = this.emailTableData.filter(c => c.customerId === ce.customerId);
         deletedCustomerEmails.forEach(de => {
+          this.isReady = false;
           let index = this.emailTableData.findIndex(c => c.customerId === de.customerId);
           this.emailTableData.splice(index, 1);  
+          this.isReady = true;
         });         
       }
     })
+  }
+
+  private storeData(index: number) {
+    this.sessionStore.setItem('customerLastTouchedIndex', index.toString());
+  }
+
+  private retrieveData() {
+    const index = Number(this.sessionStore.getItem('customerLastTouchedIndex'));
+    this.selectedCustomer = this.emailTableData[index];
   }
 }

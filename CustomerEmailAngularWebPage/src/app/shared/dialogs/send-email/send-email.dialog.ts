@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { NewEmailRequest } from '../../../models/requests/new-email-request';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
+import { SessionStorageLocalService } from '../../../services/session-storage.service';
 
 @Component({
   selector: 'send-email',
@@ -21,9 +22,8 @@ export class SendEmailDialog implements OnInit {
   output: CustomerEmail[] = [];
 
   constructor(public dialogRef: MatDialogRef<SendEmailDialog>, 
-    @Inject(MAT_DIALOG_DATA) public inputData: {isBulkEmail: boolean, customerName: string, customerId: string},
-    private apiService: CustomerEmailService
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public inputData: {isBulkEmail: boolean, customerName: string, customerId: string, emailId: string},
+    private apiService: CustomerEmailService, private sessionStore: SessionStorageLocalService) { }
 
   ngOnInit() {
     this.apiService.getAllCustomerEmails().subscribe((output) => {
@@ -54,9 +54,14 @@ export class SendEmailDialog implements OnInit {
       this.apiService.sendNewEmail(new NewEmailRequest(this.inputData.customerId, this.emailMessage)).subscribe((sent: boolean) => {
         if (sent) {
             this.output.unshift(new CustomerEmail(this.inputData.customerName, this.inputData.customerId, this.emailMessage, "00000000-0000-0000-0000-000000000000", false, new Date(), new Date()))
+            this.storeData(this.output.findIndex(ce => ce.customerId === this.inputData.customerId && ce.emailId === this.inputData.emailId));
             this.closeDialog();
         }
       });
     }
+  }
+
+  private storeData(index: number) {
+    this.sessionStore.setItem('customerLastTouchedIndex', index.toString());
   }
 }
