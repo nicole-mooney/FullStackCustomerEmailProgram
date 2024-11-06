@@ -65,11 +65,11 @@ export class CustomersComponent implements OnInit, OnChanges {
   deleteCustomer(ce: CustomerEmail) {
     this.apiService.deleteCustomer(ce.customerId).subscribe((deleted: boolean) => {
       if (deleted) {
-        //This part of the function would need to be improved to display the new list 
-        //of customer emails without the customer who got deleted.
-        //Right now, it just deletes the first iteration of the customer in the table.
-        let index = this.emailTableData.findIndex(ce => ce.customerId === ce.customerId);
-        this.emailTableData.splice(index, 1);   
+        var deletedCustomerEmails = this.emailTableData.filter(c => c.customerId === ce.customerId);
+        deletedCustomerEmails.forEach(de => {
+          let index = this.emailTableData.findIndex(c => c.customerId === de.customerId);
+          this.emailTableData.splice(index, 1);  
+        });         
       }
     })
   }
