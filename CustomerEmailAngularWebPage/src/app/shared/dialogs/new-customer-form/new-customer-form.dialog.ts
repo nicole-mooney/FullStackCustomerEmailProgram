@@ -40,6 +40,9 @@ export class NewCustomerFormDialog implements OnInit {
   createCustomer() {
     this.apiService.createCustomer(new NewCustomerRequest(this.firstName, this.lastName, this.initialMessage)).subscribe((output: any) => {
         if (this.initialMessage) {
+          //Here, I would actually be using the new GUIDs saved in the DB to replace the empty guid if I were to do it this way manually
+          //However, the correct way would be that getallcustomeremails would return the NEW list instead of the pre-existing one.
+          //This is because I did not associated a SQL Database to the application at this time.   
           this.output.unshift(new CustomerEmail(this.firstName + " " + this.lastName, "00000000-0000-0000-0000-000000000000", this.initialMessage, "00000000-0000-0000-0000-000000000000", false, new Date(), new Date()));
         }
         this.closeDialog()
