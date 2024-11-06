@@ -1,11 +1,19 @@
-<div class="send-email-form">  
-    <div class="send-email-input">
-        <label>What would you like the email to be?</label>
-        <textarea name="emailMessage" placeholder="Dear Customer, Please..." [(ngModel)]="emailMessage"></textarea>
-    </div>
+<div class="send-email-dialog">
+    <header>
+        <h4>Send Email to Customer(s)</h4>
+    </header>
+    <body>
+        <div class="send-email-form"> 
+            <label>What would you like the email to be?</label> 
+            <div>        
+                <textarea class="send-email-input" name="emailMessage" placeholder="Dear Customer, Please..." [(ngModel)]="emailMessage"></textarea>
+            </div>
+        </div>
+    </body>
+    <footer>
+        <button class="btn btn-primary send-email-btn" (click)="sendEmail()">Send Email</button>
+        <button class="btn btn-secondary close-dialog-btn" (click)="closeDialog()">Close</button>
+    </footer>
 </div>
-<footer>
-    <button class="btn btn-primary" (click)="sendEmail()">Send Email</button>
-    <button class="btn btn-secondary" (click)="closeDialog()">Close</button>
-</footer>
+
   

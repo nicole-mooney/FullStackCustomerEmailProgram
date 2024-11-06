@@ -15,10 +15,6 @@ import {FormsModule} from '@angular/forms';
   imports: [
     AppComponent,
     NavModule,
-    RouterModule,
-    MatTableModule,
-    FontAwesomeModule,
-    MatDialogModule,
   ],
   providers: [provideHttpClient(), provideNgxWebstorage()],
   bootstrap: [AppComponent]

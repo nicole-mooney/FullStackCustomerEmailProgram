@@ -1,10 +1,10 @@
 <div>
   <header>
     <h4>Customer Emails Sent Out</h4>
-    <div>
-        <button class="btn btn-primary" (click)="openSendEmailDialog()"><fa-icon [icon]="faPeopleGroup"></fa-icon>Bulk Send</button>
-        <button class="btn btn-secondary" (click)="openAddNewCustomerDialog()">Add New Customer</button>
+    <div class="open-dialog-btns">
+        <button class="btn btn-primary open-bulk-send-btn" (click)="openSendEmailDialog()"><fa-icon [icon]="faPeopleGroup"></fa-icon>Bulk Send</button>
+        <button class="btn btn-secondary open-add-new-customer-btn" (click)="openAddNewCustomerDialog()">Add New Customer</button>
     </div>
 </header>
-  <all-existing-customers></all-existing-customers>
+  <all-existing-customers *ngIf="isReady" [data]="customerEmailData"></all-existing-customers>
 </div>

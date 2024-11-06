@@ -10,6 +10,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import { SendEmailDialog } from './shared/dialogs/send-email/send-email.dialog';
 import { NewCustomerFormDialog } from './shared/dialogs/new-customer-form/new-customer-form.dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -28,10 +29,11 @@ import { NewCustomerFormDialog } from './shared/dialogs/new-customer-form/new-cu
     CustomersComponent,
     SendEmailDialog,
     NewCustomerFormDialog,
-    MatTableModule,
     FontAwesomeModule,
     MatDialogModule,
+    CommonModule,
     FormsModule
   ],
+  bootstrap: [CustomersComponent, SendEmailDialog, NewCustomerFormDialog]
 })
 export class NavModule { }

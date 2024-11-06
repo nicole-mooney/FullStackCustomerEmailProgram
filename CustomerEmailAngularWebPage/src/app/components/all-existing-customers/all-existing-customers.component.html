@@ -8,17 +8,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let email of customerEmailData">
+          <tr *ngFor="let email of emailTableData">
             <td>{{ email.customerName }}</td>
             <td>{{ email.message }}</td>
             <ng-container>
-                <button (click)="openSendEmailDialog(email)" class="btn btn-primary btn-sm">
+                <button class="btn btn-primary btn-sm" (click)="openSendEmailDialog(email)" title="Send new email to {{email.customerName}}">
                     <fa-icon [icon]="faEnvelope"></fa-icon>
                 </button>
-                <button (click)="deleteCustomerEmail(email)" class="btn btn-secondary btn-sm">
+                <button class="btn btn-secondary btn-sm" (click)="deleteCustomerEmail(email)" title="Delete email">
                     <fa-icon [icon]="faTrash"></fa-icon>
                 </button>
-                <button (click)="deleteCustomer(email)" class="btn btn-secondary btn-sm">
+                <button class="btn btn-secondary btn-sm" (click)="deleteCustomer(email)" title="Delete {{email.customerName}} and all emails associated with customer">
                     <fa-icon [icon]="faPerson"></fa-icon>
                     <fa-icon [icon]="faTrash"></fa-icon>
                 </button>                

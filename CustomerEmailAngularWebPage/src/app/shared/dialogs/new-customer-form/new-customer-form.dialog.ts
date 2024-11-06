@@ -40,7 +40,7 @@ export class NewCustomerFormDialog implements OnInit {
   createCustomer() {
     this.apiService.createCustomer(new NewCustomerRequest(this.firstName, this.lastName, this.initialMessage)).subscribe((output: any) => {
         if (this.initialMessage) {
-          this.output.push(new CustomerEmail(this.firstName + " " + this.lastName, "00000000-0000-0000-0000-000000000000", this.initialMessage, "00000000-0000-0000-0000-000000000000", false, new Date(), new Date()));
+          this.output.unshift(new CustomerEmail(this.firstName + " " + this.lastName, "00000000-0000-0000-0000-000000000000", this.initialMessage, "00000000-0000-0000-0000-000000000000", false, new Date(), new Date()));
         }
         this.closeDialog()
     });

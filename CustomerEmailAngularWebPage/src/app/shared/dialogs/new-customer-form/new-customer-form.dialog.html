@@ -1,18 +1,27 @@
-<div class="new-customer-form">  
-    <div class="new-customer-input">
-        <label>What is the customer's first name?</label>
-        <textarea name="firstName" placeholder="Jane" [(ngModel)]="firstName"></textarea>
-    </div>
-    <div class="new-customer-input">
-        <label>What is the customer's last name?</label>
-        <textarea name="lastName" placeholder="Doe" [(ngModel)]="lastName"></textarea>
-    </div>
-    <div class="send-email-input">
-        <label>What would you like the email to be?</label>
-        <textarea name="initialMessage" placeholder="Dear Customer, Please..." [(ngModel)]="initialMessage"></textarea>
-    </div>
+<div class="add-new-customer-dialog">
+    <header>
+        <h4>Add New Customer</h4>
+    </header>
+    <body>
+        <div class="add-new-customer-form">  
+            <label>What is the customer's first name?</label>
+            <div class="new-customer-first-name-input">
+                <textarea class="input" name="firstName" placeholder="Jane" [(ngModel)]="firstName"></textarea>
+            </div>
+            <label>What is the customer's last name?</label>
+            <div class="new-customer-last-name-input">
+                <textarea class="input" name="lastName" placeholder="Doe" [(ngModel)]="lastName"></textarea>
+            </div>
+            <label>What would you like the email to be?</label>
+            <div class="send-email-input">
+                <textarea class="input" name="initialMessage" placeholder="Dear Customer, Please..." [(ngModel)]="initialMessage"></textarea>
+            </div>
+        </div>
+    </body>
+    <footer>
+        <button class="btn btn-primary add-customer-btn" (click)="createCustomer()">Create New Customer</button>
+        <button class="btn btn-secondary close-dialog-btn" (click)="closeDialog()">Close</button>
+    </footer>
 </div>
-<footer>
-    <button class="btn btn-primary" (click)="createCustomer()">Create New Customer</button>
-    <button class="btn btn-secondary" (click)="closeDialog()">Close</button>
-</footer>
+
+  

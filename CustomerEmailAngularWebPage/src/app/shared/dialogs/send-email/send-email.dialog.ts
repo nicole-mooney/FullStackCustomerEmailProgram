@@ -39,13 +39,13 @@ export class SendEmailDialog implements OnInit {
     if (this.inputData.isBulkEmail) {
       this.apiService.bulkSendEmail(this.emailMessage).subscribe((sent: boolean) => {
         if (sent) {
-            let customers = this.output.map((customerEmail) => ({id: customerEmail.customerId, name: customerEmail.customerName}))
-              .filter((value, index, self) => self.indexOf(value) === index);
+            let customers = [...new Set(this.output.map((ce) => ce.customerId)),
+                ].map((id) => this.output.find((p) => p.customerId === id)!);
             customers.forEach(c => {
               //Here, I would actually be using the new GUID saved in the DB to replace the empty guid if I were to do it this way manually
               //However, the correct way would be that getallcustomeremails would return the NEW list instead of the pre-existing one.
               //This is because I did not associated a SQL Database to the application at this time.
-              this.output.push(new CustomerEmail(c.name, c.id, this.emailMessage, "00000000-0000-0000-0000-000000000000", false, new Date(), new Date()))
+              this.output.unshift(new CustomerEmail(c.customerName, c.customerId, this.emailMessage, "00000000-0000-0000-0000-000000000000", false, new Date(), new Date()))
             });
             this.closeDialog();
         }
@@ -53,7 +53,7 @@ export class SendEmailDialog implements OnInit {
     } else {
       this.apiService.sendNewEmail(new NewEmailRequest(this.inputData.customerId, this.emailMessage)).subscribe((sent: boolean) => {
         if (sent) {
-            this.output.push(new CustomerEmail("existing customer sent again - this is a filler", this.inputData.customerId, this.emailMessage, "00000000-0000-0000-0000-000000000000", false, new Date(), new Date()))
+            this.output.unshift(new CustomerEmail("existing customer sent again - this is a filler", this.inputData.customerId, this.emailMessage, "00000000-0000-0000-0000-000000000000", false, new Date(), new Date()))
             this.closeDialog();
         }
       });

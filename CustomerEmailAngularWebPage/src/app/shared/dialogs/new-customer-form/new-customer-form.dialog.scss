@@ -1,1 +1,16 @@
+.add-new-customer-dialog {
+    padding: 30px;
 
+    .input {
+        margin: auto;
+        display: block;
+    }
+}
+
+footer {
+    padding-top: 10px;
+
+    .close-dialog-btn {
+        float: right;
+    }
+}

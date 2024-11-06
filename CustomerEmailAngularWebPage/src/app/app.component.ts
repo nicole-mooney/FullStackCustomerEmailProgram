@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AppModule } from './app.module';
 import { NavModule } from './nav.module';
@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SendEmailDialog } from './shared/dialogs/send-email/send-email.dialog';
 import { CustomerEmail } from './models/customer-email';
 import { NewCustomerFormDialog } from './shared/dialogs/new-customer-form/new-customer-form.dialog';
+import { CustomerEmailService } from './services/customer-email.service';
 
 @Component({
   selector: 'app-root',
@@ -18,33 +19,55 @@ import { NewCustomerFormDialog } from './shared/dialogs/new-customer-form/new-cu
 export class AppComponent implements OnInit {
 
   faPeopleGroup = faPeopleGroup;
-  constructor(private dialog: MatDialog) { }
+  customerEmailData: CustomerEmail[] = [];
+  isReady = false;
+  
+  constructor(private apiService: CustomerEmailService, 
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit() {
+    this.getAllCustomerEmails();
   } 
+
+  // call service for getting all existing customer emails
+  getAllCustomerEmails() {
+    this.apiService.getAllCustomerEmails().subscribe((output) => {
+        this.customerEmailData = output;
+        this.isReady = true;
+    });
+  }
 
   // open send email dialog to bulk send an email to all customers
   openSendEmailDialog() {
     let dialogRef = this.dialog.open(SendEmailDialog, {
       data: { isBulkEmail: true },
+      width: 'fit-content',
+      height: 'fit-content',
       position: {
-        top: '-50%',
-        left: '10%',
+        top: '-60%',
+        left: '40%',
       }
     }).afterClosed().subscribe((newTable: CustomerEmail[]) => {
-      //This is where I would send the new table to the <all-existing-customers> html tag and via an inject in the .ts file
+      this.isReady = false;
+      this.customerEmailData = newTable;
+      this.isReady = true;
     });
   }
 
   // open send email dialog to bulk send an email to all customers
   openAddNewCustomerDialog() {
     let dialogRef = this.dialog.open(NewCustomerFormDialog, {
+      width: 'fit-content',
+      height: 'fit-content',
       position: {
-        top: '-50%',
-        left: '10%',
+        top: '-60%',
+        left: '40%',
       }
     }).afterClosed().subscribe((newTable: CustomerEmail[]) => {
-      //This is where I would send the new table to the <all-existing-customers> html tag and via an inject in the .ts file
+      this.isReady = false;
+      this.customerEmailData = newTable;
+      this.isReady = true;    
     });
   }
 }

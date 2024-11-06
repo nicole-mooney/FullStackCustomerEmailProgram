@@ -1,1 +1,16 @@
+.send-email-dialog {
+    padding: 30px;
 
+    .send-email-input {
+        margin: auto;
+        display: block;
+    }
+}
+
+footer {
+    padding-top: 10px;
+
+    .close-dialog-btn {
+        float: right;
+    }
+}
