@@ -16,7 +16,7 @@ Controller, Business Logic, and Data Logic, with the BL and DL containing Interf
 Furthermore, the Data Logic contains the Mock Repository files that house calls such as .Create, .Remove, .Update, etc.
 
 In the front-end, you are able to:
-* delete a customer (with performance modifications coming soon),
+* delete a customer,
 * delete an email,
 * bulk send an email to all customers,
 * add a new customer, and
