@@ -21,7 +21,7 @@ export class SendEmailDialog implements OnInit {
   output: CustomerEmail[] = [];
 
   constructor(public dialogRef: MatDialogRef<SendEmailDialog>, 
-    @Inject(MAT_DIALOG_DATA) public inputData: {isBulkEmail: boolean, customerId: string},
+    @Inject(MAT_DIALOG_DATA) public inputData: {isBulkEmail: boolean, customerName: string, customerId: string},
     private apiService: CustomerEmailService
   ) { }
 
@@ -53,7 +53,7 @@ export class SendEmailDialog implements OnInit {
     } else {
       this.apiService.sendNewEmail(new NewEmailRequest(this.inputData.customerId, this.emailMessage)).subscribe((sent: boolean) => {
         if (sent) {
-            this.output.unshift(new CustomerEmail("existing customer sent again - this is a filler", this.inputData.customerId, this.emailMessage, "00000000-0000-0000-0000-000000000000", false, new Date(), new Date()))
+            this.output.unshift(new CustomerEmail(this.inputData.customerName, this.inputData.customerId, this.emailMessage, "00000000-0000-0000-0000-000000000000", false, new Date(), new Date()))
             this.closeDialog();
         }
       });

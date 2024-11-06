@@ -38,7 +38,7 @@ export class CustomersComponent implements OnInit, OnChanges {
   // open send email dialog
   openSendEmailDialog(ce: CustomerEmail) {
     let dialogRef = this.dialog.open(SendEmailDialog, {
-      data: { customerId: ce.customerId },
+      data: { customerName: ce.customerName, customerId: ce.customerId },
       width: 'fit-content',
       height: 'fit-content',
       position: {
